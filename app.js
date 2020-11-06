@@ -3,13 +3,23 @@ const xml2js = require('xml2js')
 const log4js = require('log4js');
 log4js.configure(require('./config/logConfig'));
 const logger = log4js.getLogger()
-logger.info('hello myDDNS damon start')
+const getIpService = require('./service/getIpService')
+
+
+logger.info('hello ddns4RaspberryPi start=================>')
 let oldIp = ''
 const config = require('./config/config')
-setInterval(myTask, 10000)
+
+async function main() {
+    await getIpService()
+    setInterval(myTask, config.intervalTime)
+}
+main()
+
+
 
 async function myTask() {
-    const newIp = await getMyIp()
+    const newIp = await getIpService()
     logger.info(`旧的ip是${oldIp} 我目前的ip是${newIp}`)
 
     if (oldIp !== newIp || oldIp === '') {
@@ -22,15 +32,21 @@ async function myTask() {
 // getMyIp()
 async function getMyIp() {
     try {
-        const { data } = await axios.get('http://ipconfig.me/ip')
+        const {
+            data
+        } = await axios.get('http://ipconfig.me/ip')
         return data
     } catch (err) {
         logger.error(err.message)
-        
+
     }
 
 }
-async function updateMyIp({ host, domain_name, ddns_password }) {
+async function updateMyIp({
+    host,
+    domain_name,
+    ddns_password
+}) {
     const url = `https://dynamicdns.park-your-domain.com/update?host=${host}&domain=${domain_name}&password=${ddns_password}`
     logger.info(`更新api的 url:${url}`)
     let response = await axios.get(url)
