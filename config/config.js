@@ -6,5 +6,5 @@ module.exports={
     // see from your namecheap page
     ddns_password:'nameCheapPassword',
     // your_ip:''
-    intervalTime:20000
+    intervalTime:5000
 }

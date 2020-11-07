@@ -29,19 +29,7 @@ async function myTask() {
     }
 
 }
-// getMyIp()
-async function getMyIp() {
-    try {
-        const {
-            data
-        } = await axios.get('http://ipconfig.me/ip')
-        return data
-    } catch (err) {
-        logger.error(err.message)
 
-    }
-
-}
 async function updateMyIp({
     host,
     domain_name,
