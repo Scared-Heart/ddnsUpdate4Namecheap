@@ -62,6 +62,7 @@ module.exports = async () => {
     } catch (e) {
         logger.error(`获取ip发生异常 ${e.message}`)
         goodFun = ''
+        throw new Error(`获取ip发生异常 ${e.message}`)
     }
 
 }
