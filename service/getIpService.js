@@ -28,11 +28,14 @@ async function test() {
         tasks.push(registeredServices[fnList[i]]())
     }
     return Promise.all(tasks).then(results => {
+        logger.info(`
+        获取ip测试结果为:
+        ${fnList}
+        ${results}`)
+
         for (let i = 0; i < results.length; i++) {
-            console.log(results)
-            if (results[i] && results[i].length > 0) {
+            if (results[i] && validator.isIP(results[i], 4)) {
                 goodFun = fnList[i]
-                console.log(goodFun)
                 logger.info(`可用的服务为:${goodFun}`)
                 return results[i]
             }
@@ -44,6 +47,7 @@ async function test() {
 }
 module.exports = async () => {
     try {
+        logger.info(goodFun)
         let result
         if (goodFun && goodFun !== '') {
             result = await registeredServices[goodFun]()
@@ -56,7 +60,7 @@ module.exports = async () => {
         return result
 
     } catch (e) {
-        logger.error(e.message)
+        logger.error(`获取ip发生异常 ${e.message}`)
         goodFun = ''
     }
 
