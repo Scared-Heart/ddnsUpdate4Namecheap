@@ -1,8 +1,5 @@
 const validator = require('validator')
 const axios = require('axios')
-const log4js = require('log4js');
-log4js.configure(require('../config/logConfig'));
-const logger = log4js.getLogger()
 
 
 axios.defaults.headers.common['user-agent'] = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36`

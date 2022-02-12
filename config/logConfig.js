@@ -1,9 +1,0 @@
-module.exports = {
-    appenders: {
-      out: { type: 'stdout' },
-      app: { type: 'file', filename: 'application.log' }
-    },
-    categories: {
-      default: { appenders: [ 'out', 'app' ], level: 'debug' }
-    }
-  }
