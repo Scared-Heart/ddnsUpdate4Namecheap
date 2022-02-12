@@ -25,7 +25,7 @@ async function test() {
         tasks.push(registeredServices[fnList[i]]())
     }
     return Promise.all(tasks).then(results => {
-        logger.info(`
+        console.info(`
         获取ip测试结果为:
         ${fnList}
         ${results}`)
@@ -33,7 +33,7 @@ async function test() {
         for (let i = 0; i < results.length; i++) {
             if (results[i] && validator.isIP(results[i], 4)) {
                 goodFun = fnList[i]
-                logger.info(`可用的服务为:${goodFun}`)
+                console.info(`可用的服务为:${goodFun}`)
                 return results[i]
             }
         }
@@ -44,7 +44,7 @@ async function test() {
 }
 module.exports = async () => {
     try {
-        logger.info(goodFun)
+        console.info(goodFun)
         let result
         if (goodFun && goodFun !== '') {
             result = await registeredServices[goodFun]()
@@ -57,7 +57,7 @@ module.exports = async () => {
         return result
 
     } catch (e) {
-        logger.error(`获取ip发生异常 ${e.message}`)
+        console.error(`获取ip发生异常 ${e.message}`)
         goodFun = ''
         throw new Error(`获取ip发生异常 ${e.message}`)
     }
@@ -72,7 +72,7 @@ async function getMyIpFromIpConfig() {
         } = await axios.get('http://ipconfig.me/ip')
         return data
     } catch (err) {
-        logger.error(`getMyIpFromIpConfig:  ${err.message}`)
+        console.error(`getMyIpFromIpConfig:  ${err.message}`)
         return false
     }
 }
@@ -84,7 +84,7 @@ async function getMyIpFromIpInfo() {
         } = await axios.get('http://ipinfo.io/json')
         return data.ip
     } catch (err) {
-        logger.error(`getMyIpFromIpInfo:  ${err.message}`)
+        console.error(`getMyIpFromIpInfo:  ${err.message}`)
         return false
 
     }
@@ -97,7 +97,7 @@ async function getMyIpFromIpCipCC() {
         } = await axios.get('http://ip.cip.cc/')
         return data.replace(/\n/, '')
     } catch (err) {
-        logger.error(`getMyIpFromIpConfig:  ${err.message}`)
+        console.error(`getMyIpFromIpConfig:  ${err.message}`)
         return false
     }
 
@@ -110,7 +110,7 @@ async function getMyIpFromIpSb() {
         } = await axios.get('https://api.ip.sb/ip')
         return data.replace(/\n/, '')
     } catch (err) {
-        logger.error(`getMyIpFromIpSb:  ${err.message}`)
+        console.error(`getMyIpFromIpSb:  ${err.message}`)
         return false
     }
 
@@ -123,7 +123,7 @@ async function getMyIpFromMyIp() {
         } = await axios.get('http://myip.ipip.net/ip')
         return data.ip
     } catch (err) {
-        logger.error(`getMyIpFromMyIp:  ${err.message}`)
+        console.error(`getMyIpFromMyIp:  ${err.message}`)
         return false
     }
 }
